@@ -9,7 +9,6 @@ public class DetalhesError {
 	
 	public DetalhesError() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public DetalhesError(String titulo, Long status, Long timestamp, String mensagemDesenvolvedor) {

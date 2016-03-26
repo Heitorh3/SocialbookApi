@@ -33,7 +33,7 @@ public class LivrosService {
 			throw new LivroNaoEncontradoException("O livro nao foi encontrado");
 		}
 		
-		return null;
+		return livro;
 	}
 	
 	public Livro salvar(Livro livro){
