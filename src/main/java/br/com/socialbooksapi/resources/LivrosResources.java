@@ -31,35 +31,26 @@ public class LivrosResources {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-<<<<<<< HEAD
 	public ResponseEntity<Void> salvar(@RequestBody Livro livro){
 		
-		livro = livrosRepository.save(livro);
+		livro = livrosService.salvar(livro);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(livro.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
-=======
-	public void salvar(@RequestBody Livro livro){
-		livrosService.salvar(livro);
->>>>>>> 0b0869d786eac22c2ea1fec62277a3087f46c711
 	}
 	
 	@RequestMapping(value = "/{id}",  method = RequestMethod.GET)
 	public ResponseEntity<?> buscar(@PathVariable("id") Long id){
-<<<<<<< HEAD
-		Livro livro = livrosRepository.findOne(id);
+
+		Livro livro = livrosService.buscar(id);
 		
 		if(livro == null){
 			return ResponseEntity.notFound().build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(livro);
-=======
-		Livro livro = livrosService.buscar(id);
-	    return ResponseEntity.status(HttpStatus.OK).body(livro);
->>>>>>> 0b0869d786eac22c2ea1fec62277a3087f46c711
 	}
 	
 	@RequestMapping(value = "/{id}",  method = RequestMethod.DELETE)
