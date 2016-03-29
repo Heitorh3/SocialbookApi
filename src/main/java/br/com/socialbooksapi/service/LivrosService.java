@@ -43,7 +43,7 @@ public class LivrosService {
 	
 	public void deletar(Long id){
 		try {
-			
+			livrosRepository.delete(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new LivroNaoEncontradoException("O livro nao pôde ser encontrado");
 		}
