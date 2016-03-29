@@ -31,8 +31,13 @@ public class LivrosResources {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void salvar(@RequestBody Livro livro){
-		livrosService.salvar(livro);
+	public  ResponseEntity<Void>  salvar(@RequestBody Livro livro){
+		livro = livrosService.salvar(livro);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").build().toUri();
+		
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value = "/{id}",  method = RequestMethod.GET)

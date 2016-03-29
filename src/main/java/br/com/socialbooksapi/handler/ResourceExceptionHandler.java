@@ -2,6 +2,7 @@ package br.com.socialbooksapi.handler;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,7 +35,7 @@ public class ResourceExceptionHandler {
 											System.currentTimeMillis(), 
 											"http://erros.socialbooksa.com/409");
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
 	}
 	
 	@ExceptionHandler(AutorNaoEncontradoException.class)
@@ -46,5 +47,16 @@ public class ResourceExceptionHandler {
 											"http://erros.socialbooksa.com/404");
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+	}
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<DetalhesError> DataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request){
+		
+		DetalhesError erro = new DetalhesError("Requisicao invalida!", 
+											400l, 
+											System.currentTimeMillis(), 
+											"http://erros.socialbooksa.com/400");
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
 	}
 }
