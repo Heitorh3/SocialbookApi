@@ -22,7 +22,7 @@ public class AutoresService {
 	
 	public Autor salvar(Autor autor){
 		if(autor.getId() != null){
-			Autor a = autoresRepository.findOne(autor.getId());
+			Autor a = this.buscar(autor.getId());
 			
 			if(a != null){
 				throw new AutorExistenteException("O autor já existe!");

@@ -41,7 +41,7 @@ public class LivrosResources {
 		livro = livrosService.salvar(livro);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").build().toUri();
+				.path("/{id}").buildAndExpand(livro.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
 	}

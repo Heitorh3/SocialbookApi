@@ -39,7 +39,7 @@ public class AutoresResources {
 		autor = autoresService.salvar(autor);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").build().toUri();
+				.path("/{id}").buildAndExpand(autor.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
 	}
