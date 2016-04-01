@@ -40,7 +40,6 @@ public class Autor {
 	@OneToMany(mappedBy = "autor")
 	private List<Livro>livros;
 	
-	
 	public Long getId() {
 		return id;
 	}
