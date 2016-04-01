@@ -55,7 +55,7 @@ public class LivrosResources {
 			return ResponseEntity.notFound().build();
 		}
 		
-		CacheControl cacheControl = CacheControl.maxAge(20, TimeUnit.SECONDS);
+		CacheControl cacheControl = CacheControl.maxAge(30, TimeUnit.SECONDS);
 		
 		return ResponseEntity.status(HttpStatus.OK).cacheControl(cacheControl).body(livro);
 	}
@@ -70,7 +70,7 @@ public class LivrosResources {
 	public ResponseEntity<Void> atualizar(@RequestBody Livro livro, @PathVariable("id") Long id){
 		
 		livro.setId(id);
-		livrosService.atualizar(livro);
+		livrosService.salvar(livro);
 		
 		return ResponseEntity.noContent().build();
 	}

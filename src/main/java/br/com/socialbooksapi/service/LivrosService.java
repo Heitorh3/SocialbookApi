@@ -37,7 +37,13 @@ public class LivrosService {
 	}
 	
 	public Livro salvar(Livro livro){
-		livro.setId(null);
+		
+		if(livro.getId() != null){
+			verificarExistencia(livro);
+			return livrosRepository.save(livro);
+		}
+		
+		livro.setId(null);		
 		return livrosRepository.save(livro);
 	}
 	
@@ -47,11 +53,6 @@ public class LivrosService {
 		} catch (EmptyResultDataAccessException e) {
 			throw new LivroNaoEncontradoException("O livro nao pôde ser encontrado");
 		}
-	}
-	
-	public void atualizar(Livro livro){
-		verificarExistencia(livro);
-		livrosRepository.save(livro);
 	}
 	
 	private void verificarExistencia(Livro livro){
