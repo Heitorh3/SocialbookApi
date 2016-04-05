@@ -38,10 +38,9 @@ public class UserService {
     private AuthorityRepository authorityRepository;
 
     public Optional<User> activateRegistration(String key) {
-        log.debug("Activating user for activation key {}", key);
+        log.debug("Ativando o usuário pela sua chave {}", key);
         userRepository.findOneByActivationKey(key)
-            .map(user -> {
-                // activate given user for the registration key.
+            .map(user -> {                
                 user.setActivated(true);
                 userRepository.save(user);
                 log.debug("Ativando usuário: {}", user);
@@ -51,10 +50,11 @@ public class UserService {
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
-       log.debug("Reset user password for reset key {}", key);
+       log.debug("Resetando o password pela chave {}", key);
 
        return userRepository.findOneByResetKey(key)
            .map(user -> {
+        	   	log.debug("Resetando o password {}", key);
                 user.setPassword(passwordEncoder.encode(newPassword));
                 userRepository.save(user);
                 return user;
@@ -62,6 +62,7 @@ public class UserService {
     }
 
     public Optional<User> requestPasswordReset(String mail) {
+    	log.debug("Requisitando reset de senha por email");
         return userRepository.findOneByEmail(mail)
             .filter(User::getActivated)
             .map(user -> {
