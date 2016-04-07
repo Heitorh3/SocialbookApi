@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.socialbooksapi.domain.User;
 import br.com.socialbooksapi.repository.UserRepository;
-import br.com.socialbooksapi.service.exceptions.UserNotActivatedException;
+import br.com.socialbooksapi.service.exceptions.UsuarioNaoActivadoException;
 
 /**
  * Authenticate a user from the database.
@@ -38,7 +38,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         Optional<User> userFromDatabase = userRepository.findOneByLogin(lowercaseLogin);
         return userFromDatabase.map(user -> {
             if (!user.getActivated()) {
-                throw new UserNotActivatedException("Usuário " + lowercaseLogin + " não esta ativado");
+                throw new UsuarioNaoActivadoException("Usuário " + lowercaseLogin + " não esta ativado");
             }
             List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
                     .map(authority -> new SimpleGrantedAuthority(authority.getName()))
