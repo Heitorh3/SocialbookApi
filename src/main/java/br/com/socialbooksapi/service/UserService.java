@@ -4,10 +4,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,32 +24,32 @@ import br.com.socialbooksapi.util.SecurityUtils;
 @Transactional
 public class UserService {
 
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
-
-    @Inject
+	private final Logger LOGGER = Logger.getLogger(this.getClass());
+	 
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Inject
+    @Autowired
     private UserRepository userRepository;
 
-    @Inject
+    @Autowired
     private AuthorityRepository authorityRepository;
 
     public Optional<User> activateRegistration(String key) {
-        log.debug("Activating user for activation key {}", key);
+    	this.LOGGER.debug(String.format("Activating user for activation key [%s]!", key));
         userRepository.findOneByActivationKey(key)
             .map(user -> {
                 // activate given user for the registration key.
                 user.setActivated(true);
                 userRepository.save(user);
-                log.debug("Ativando usuário: {}", user);
+                this.LOGGER.debug(String.format("Ativando usuário: []!", user));        
                 return user;
             });
         return Optional.empty();
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
-       log.debug("Reset user password for reset key {}", key);
+       this.LOGGER.debug(String.format("Resetando a senha do usuário para: [%s]!", key));
 
        return userRepository.findOneByResetKey(key)
            .map(user -> {
@@ -88,7 +86,7 @@ public class UserService {
         authorities.add(authority);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
-        log.debug("Created Information for User: {}", newUser);
+        this.LOGGER.debug(String.format("Criando informacao do usuário [%s]!", newUser));
         return newUser;
     }
 
@@ -114,7 +112,7 @@ public class UserService {
 	        }
 	        
         userRepository.saveAndFlush(user);
-        log.debug("Salvando informacoes do usuario: {}", user);
+        this.LOGGER.debug(String.format("Salvando informacoes do usuario: {}!", user));
         return user;
     }
 
@@ -123,14 +121,14 @@ public class UserService {
             u.setNome(firstName);
             u.setEmail(email);
             userRepository.save(u);
-            log.debug("Atualizando informacoes do usuario: {}", u);
+            this.LOGGER.debug(String.format("Atualizando informacoes do usuario: {}!", u));
         });
     }
 
     public void deleteUserInformation(String login) {
         userRepository.findOneByLogin(login).ifPresent(u -> {
             userRepository.delete(u);
-            log.debug("Deletando Usuario: {}", u);
+            this.LOGGER.debug(String.format("Deletando um usuario: {}!", u));
         });
     }
 
@@ -139,7 +137,7 @@ public class UserService {
             String encryptedPassword = passwordEncoder.encode(password);
             u.setPassword(encryptedPassword);
             userRepository.save(u);
-            log.debug("Carregando senha do usuario: {}", u);
+            this.LOGGER.debug(String.format("Carregando a senha do usuario: {}!", u));
         });
     }
 
@@ -193,7 +191,7 @@ public class UserService {
 		userRepository.findOneById(id).ifPresent(u -> {
 			u.setActivated(false);
             userRepository.save(u);
-            log.debug("Desativando o Usuario: {}", u);
+            this.LOGGER.debug(String.format("Desativando o usuario: {}!", u));
         });
 	}
 
@@ -201,7 +199,7 @@ public class UserService {
 		userRepository.findOneById(id).ifPresent(u -> {
 			u.setActivated(true);
             userRepository.save(u);
-            log.debug("Deletando Usuario: {}", u);
+            this.LOGGER.debug(String.format("Deletando o usuario: {}!", u));
         });
 	}
 
