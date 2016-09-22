@@ -4,7 +4,12 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+<<<<<<< HEAD
 import org.apache.log4j.Logger;
+=======
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+>>>>>>> 12d98422aebc8a09124f269e96c8c5673ff8b364
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,8 +29,13 @@ import br.com.socialbooksapi.util.SecurityUtils;
 @Transactional
 public class UserService {
 
+<<<<<<< HEAD
 	private final Logger LOGGER = Logger.getLogger(this.getClass());
 	 
+=======
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
+
+>>>>>>> 12d98422aebc8a09124f269e96c8c5673ff8b364
     @Autowired
     private PasswordEncoder passwordEncoder;
 
