@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+<<<<<<< HEAD
+import org.apache.log4j.Logger;
+=======
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+>>>>>>> 12d98422aebc8a09124f269e96c8c5673ff8b364
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +28,7 @@ import br.com.socialbooksapi.service.exceptions.UserNotActivatedException;
 @Component("userDetailsService")
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-    private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
+    private final Logger LOGGER = Logger.getLogger(this.getClass());
 
     @Autowired
     private UserRepository userRepository;
@@ -32,7 +36,8 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
-        log.debug("Autenticando {}", login);
+        this.LOGGER.debug(String.format("Autenticando[%s]!", login));
+               
         String lowercaseLogin = login.toLowerCase();
         Optional<User> userFromDatabase = userRepository.findOneByLogin(lowercaseLogin);
         return userFromDatabase.map(user -> {

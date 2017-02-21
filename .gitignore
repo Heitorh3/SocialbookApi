@@ -1,1 +1,13 @@
+<<<<<<< HEAD
 /target/
+=======
+/target/*
+*.class
+.DS_Store
+.metadata
+.settings
+.classpath
+.project
+/target/
+*.bak
+>>>>>>> e2b46ab121a560e55b369d29c35be288d22c4305
